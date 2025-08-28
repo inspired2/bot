@@ -1,3 +1,2 @@
-mod config;
 mod error;
-mod traits;
+pub mod traits;
