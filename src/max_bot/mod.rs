@@ -1,4 +1,3 @@
-//use crate::traits::bot::{ Bot, BotError, BotConfig, BotApi, IntoConfig, BotMessage };
 use bot::traits::bot::{Bot, BotError, BotConfig, BotApi, IntoConfig, BotMessage};
 pub struct MaxBot {
     config: Option<Config>,
@@ -25,7 +24,16 @@ pub struct Config;
 enum Error {}
 impl BotError for Error {}
 
-impl BotConfig for Config {}
+impl BotConfig<Error> for Config {
+    async fn from_file(path: &std::ffi::OsStr) -> Result<Self, Error>
+    where Self: Sized {
+        todo!()
+    }
+    
+    fn new() -> Self {
+        todo!()
+    }
+}
 
 pub struct Api {}
 impl BotApi<Error, Message> for Api {

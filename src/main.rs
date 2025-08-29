@@ -8,6 +8,6 @@ use tokio;
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     let file = tokio::fs::File::open("./config.json").await.ok().unwrap();
-    let config = MaxBot::from_config(file).await.unwrap();
+    //let config = MaxBot::from_config(file).await.unwrap();
     Ok(())
 }
