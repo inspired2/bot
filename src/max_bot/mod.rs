@@ -1,13 +1,23 @@
+use std::ffi::OsStr;
+
 use bot::traits::bot::{Bot, BotError, BotConfig, BotApi, IntoConfig, BotMessage};
 pub struct MaxBot {
     config: Option<Config>,
     api: Option<Api>,
 }
-impl Bot<Error, Message, Api> for MaxBot {
-    fn from_config(config: impl IntoConfig) -> Result<Self, Error>
+struct AppArgs<'a> {
+    work_dir: &'a OsStr,
+    config_path:&'a OsStr
+}
+impl Bot<Error, Message, Api, Config> for MaxBot {
+    fn from_config(config: Config) -> Result<Self, Error>
     where
         Self: Sized {
-        todo!()
+        let bot = MaxBot {
+            config: Some(config.into()),
+            api: None
+        };
+        Ok(bot)
     }
 
     fn with_api(mut self, api: Api) -> Result<Self, Error> where Self: Sized {
@@ -27,10 +37,6 @@ impl BotError for Error {}
 impl BotConfig<Error> for Config {
     async fn from_file(path: &std::ffi::OsStr) -> Result<Self, Error>
     where Self: Sized {
-        todo!()
-    }
-    
-    fn new() -> Self {
         todo!()
     }
 }

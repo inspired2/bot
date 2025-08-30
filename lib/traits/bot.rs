@@ -1,5 +1,6 @@
-pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>> {
-    fn from_config(config: impl IntoConfig) -> Result<Self, E>
+pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>, C: BotConfig<E>> {
+    fn with_args(args: impl Into)
+    fn from_config(config: C) -> Result<Self, E>
     where
         Self: Sized;
     fn with_api(self, api: A) -> Result<Self, E> where Self: Sized;
@@ -15,17 +16,9 @@ pub trait BotApi<E: BotError, M: BotMessage> {
 }
 
 pub trait BotConfig<E: BotError> {
-    fn new() -> Self;
-    async fn from_file(mut self, path: &std::ffi::OsStr) -> Result<Self, E>
-    where Self: Sized {
-        let file = tokio::fs::File::open(path).await.map_err(|_| crate::error::Error::File)?;
-        //assert!(file.metadata().await?.is_file());
-
-        Ok(self)
-    }
+    async fn from_file(path: &std::ffi::OsStr) -> Result<Self, E>
+    where Self: Sized;
 }
 
-pub trait BotError: {}
-impl BotError for crate::error::Error {}
-
+pub trait BotError {}
 pub trait BotMessage {}

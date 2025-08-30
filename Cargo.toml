@@ -10,3 +10,4 @@ path = "./lib/mod.rs"
 [dependencies]
 tokio = { version = "*",  features = ["full"]}
 thiserror = { version = "*"}
+clap = { version = "4.5.46", features = ["derive"] }
