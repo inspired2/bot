@@ -1,5 +1,4 @@
 pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>, C: BotConfig<E>> {
-    fn with_args(args: impl Into)
     fn from_config(config: C) -> Result<Self, E>
     where
         Self: Sized;
