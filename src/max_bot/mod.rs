@@ -1,14 +1,12 @@
-use std::ffi::OsStr;
+use std::path::PathBuf;
 
-use bot::traits::bot::{Bot, BotError, BotConfig, BotApi, IntoConfig, BotMessage};
+use bot::error::Error;
+use bot::traits::bot::{Bot, BotConfig, BotApi, BotMessage};
 pub struct MaxBot {
     config: Option<Config>,
     api: Option<Api>,
 }
-struct AppArgs<'a> {
-    work_dir: &'a OsStr,
-    config_path:&'a OsStr
-}
+
 impl Bot<Error, Message, Api, Config> for MaxBot {
     fn from_config(config: Config) -> Result<Self, Error>
     where
@@ -31,11 +29,8 @@ impl Bot<Error, Message, Api, Config> for MaxBot {
 }
 pub struct Config;
 
-enum Error {}
-impl BotError for Error {}
-
 impl BotConfig<Error> for Config {
-    async fn from_file(path: &std::ffi::OsStr) -> Result<Self, Error>
+    async fn from_file(path: PathBuf) -> Result<Self, Error>
     where Self: Sized {
         todo!()
     }

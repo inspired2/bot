@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>, C: BotConfig<E>> {
     fn from_config(config: C) -> Result<Self, E>
     where
@@ -15,7 +17,7 @@ pub trait BotApi<E: BotError, M: BotMessage> {
 }
 
 pub trait BotConfig<E: BotError> {
-    async fn from_file(path: &std::ffi::OsStr) -> Result<Self, E>
+    async fn from_file(path: PathBuf) -> Result<Self, E>
     where Self: Sized;
 }
 
