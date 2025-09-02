@@ -38,10 +38,13 @@ impl BotConfig<Error> for Config {
 
 pub struct Api {}
 impl BotApi<Error, Message> for Api {
+    fn new() -> Self {
+        Api {}
+    }
     async fn get_messages(&self, message: Message) -> Result<Vec<Message>, Error> {
         todo!()
     }
 }
 
-enum Message {}
+pub enum Message {}
 impl BotMessage for Message {}

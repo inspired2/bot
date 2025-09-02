@@ -1,7 +1,9 @@
 use crate::traits::bot::BotError;
+#[derive(Debug)]
 pub struct Error {
     kind: ErrorKind,
 }
+#[derive(Debug)]
 pub enum ErrorKind {
     io(tokio::io::Error),
 }

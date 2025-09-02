@@ -13,6 +13,7 @@ pub trait IntoConfig {
 }
 
 pub trait BotApi<E: BotError, M: BotMessage> {
+    fn new() -> Self;
     async fn get_messages(&self, message: M) -> Result<Vec<M>, E>;
 }
 
