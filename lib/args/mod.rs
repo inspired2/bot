@@ -14,7 +14,7 @@ struct CliArgs {
 enum LogLevel {
     Trace,
     Info,
-    Debug
+    Debug,
 }
 impl ValueEnum for LogLevel {
     fn value_variants<'a>() -> &'a [Self] {
