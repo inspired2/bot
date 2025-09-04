@@ -37,11 +37,15 @@ impl BotConfig<Error> for Config {
 }
 
 pub struct Api {}
-impl BotApi<Error, Message> for Api {
-    fn new() -> Self {
+impl BotApi<Error, Message, Config> for Api {
+    fn from_config(conf: Config) -> Self {
         Api {}
     }
     async fn get_messages(&self, message: Message) -> Result<Vec<Message>, Error> {
+        todo!()
+    }
+    
+    fn new() -> Self {
         todo!()
     }
 }
