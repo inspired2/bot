@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M,C>, C: BotConfig<E>> {
+pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>, C: BotConfig<E>> {
     fn from_config(config: C) -> Result<Self, E>
     where
         Self: Sized;
@@ -12,15 +12,17 @@ pub trait IntoConfig {
     fn into_config<C: BotConfig<E>, E: BotError>(file: impl tokio::io::AsyncRead) -> Result<C, E>;
 }
 
-pub trait BotApi<E: BotError, M: BotMessage, C: BotConfig<E>> {
-    fn new() -> Self;
-    fn from_config(conf: C) -> Self;
-    async fn get_messages(&self, message: M) -> Result<Vec<M>, E>;
+pub trait BotApi<E: BotError, M: BotMessage> {
+    async fn from_file(path: PathBuf) -> Result<Self, E>
+        where Self: Sized;
+    fn get_messages(&self, message: M) -> impl std::future::Future<Output = Result<Vec<M>, E>> + Send;
 }
 
 pub trait BotConfig<E: BotError> {
-    async fn from_file(path: PathBuf) -> Result<Self, E>
-    where Self: Sized;
+    fn from_file(path: PathBuf) -> impl std::future::Future<Output = Result<Self, E>> + Send
+        where Self: Sized;
+fn get_api_path(&self) -> PathBuf;
+
 }
 
 pub trait BotError {}
