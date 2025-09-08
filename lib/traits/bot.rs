@@ -1,10 +1,11 @@
 use std::path::PathBuf;
 
-pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>, C: BotConfig<E>> {
+pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>, C: BotConfig<E>, S: BotState> {
     fn from_config(config: C) -> Result<Self, E>
     where
         Self: Sized;
     fn with_api(self, api: A) -> Result<Self, E> where Self: Sized;
+    fn with_state(self, state: S) -> Result<Self, E> where Self: Sized;
     fn run(self) -> impl std::future::Future<Output = Result<(), E>> + Send;
 }
 
@@ -27,3 +28,8 @@ fn get_api_path(&self) -> PathBuf;
 
 pub trait BotError {}
 pub trait BotMessage {}
+
+pub trait BotState: Sync {
+    fn init() -> Self
+    where Self: Sized;
+}
