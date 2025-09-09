@@ -1,11 +1,12 @@
 mod max;
 
 use max::bot::MaxBot;
-use bot::traits::bot::{Bot, BotApi, BotConfig};
+use bot::traits::bot::{Bot, BotApi, BotConfig, BotState};
 use bot::args::CliArgs;
 use clap::Parser;
 use crate::max::api::Api;
 use crate::max::config::Config;
+use crate::max::state::State;
 use bot::error::Error;
 
 use tokio;
@@ -20,8 +21,12 @@ async fn main() -> Result<(), Error> {
     let api_path= app_config.get_api_path();
     let api = Api::from_file(api_path).await?;
 
+    let state = State::init();
+
     let bot = MaxBot::from_config(app_config)?
-        .with_api(api)?;
+        .with_api(api)?
+        .with_state(state)?;
+    
     bot.run().await?;
 
     Ok(())
