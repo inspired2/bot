@@ -1,4 +1,4 @@
-use bot::{error::Error, traits::bot::Bot};
+use bot::{error::Error, traits::bot::{Bot}};
 
 use crate::max::{api::{Api, Message}, config::Config, state::State};
 
@@ -6,6 +6,14 @@ pub struct MaxBot {
     config: Option<Config>,
     api: Option<Api>,
     state: Option<State>
+}
+impl MaxBot {
+    async fn start_polling(self) -> Result<(), Error> {
+        /// try get all messages
+        /// put them in state
+        /// process messages
+        todo!()
+    }
 }
 
 impl Bot<Error, Message, Api, Config, State> for MaxBot {
@@ -31,6 +39,7 @@ impl Bot<Error, Message, Api, Config, State> for MaxBot {
     async fn run(self) -> Result<(), Error> {
         assert!(&self.state.as_ref().is_some(), "state is not initialized. call 'with_state(state)' before 'run()'");
         assert!(&self.api.as_ref().is_some(), "api is not initialized. call 'with_api(api)' before 'run()'");
+        self.start_polling().await?;
         Ok(())
     }   
 }
