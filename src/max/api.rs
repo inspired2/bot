@@ -1,9 +1,11 @@
 use bot::{error::Error, traits::bot::{BotApi, BotMessage}};
 
-
-pub struct Api {}
+#[derive(Clone)]
+pub struct Api {
+    
+}
 impl BotApi<Error, Message> for Api {
-    async fn get_messages(&self, message: Message) -> Result<Vec<Message>, Error> {
+    async fn get_messages(&self) -> Result<Vec<Message>, Error> {
         todo!()
     }
     

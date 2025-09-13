@@ -2,6 +2,7 @@ use std::path::PathBuf;
 
 use bot::{error::Error, traits::bot::BotConfig};
 
+#[derive(Clone)]
 pub struct Config;
 
 impl BotConfig<Error> for Config {

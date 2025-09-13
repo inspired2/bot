@@ -7,6 +7,7 @@ pub trait Bot<E: BotError, M: BotMessage, A: BotApi<E,M>, C: BotConfig<E>, S: Bo
     fn with_api(self, api: A) -> Result<Self, E> where Self: Sized;
     fn with_state(self, state: S) -> Result<Self, E> where Self: Sized;
     fn run(self) -> impl std::future::Future<Output = Result<(), E>> + Send;
+    fn get_messages(&self) -> impl std::future::Future<Output = Result<Vec<M>, E>> + Send;
 }
 
 pub trait IntoConfig {
@@ -16,7 +17,7 @@ pub trait IntoConfig {
 pub trait BotApi<E: BotError, M: BotMessage> {
     async fn from_file(path: PathBuf) -> Result<Self, E>
         where Self: Sized;
-    fn get_messages(&self, message: M) -> impl std::future::Future<Output = Result<Vec<M>, E>> + Send;
+    fn get_messages(&self) -> impl std::future::Future<Output = Result<Vec<M>, E>> + Send;
 }
 
 pub trait BotConfig<E: BotError> {
