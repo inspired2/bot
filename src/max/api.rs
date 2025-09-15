@@ -1,7 +1,10 @@
+use std::collections::HashMap;
+
 use bot::{error::Error, traits::bot::{BotApi, BotMessage}};
 
 #[derive(Clone)]
 pub struct Api {
+    http: Req
     
 }
 impl BotApi<Error, Message> for Api {
@@ -17,3 +20,13 @@ impl BotApi<Error, Message> for Api {
 
 pub enum Message {}
 impl BotMessage for Message {}
+
+#[derive(Clone)]
+struct Req {
+    inner: HashMap<Request, String>
+}
+
+#[derive(Clone)]
+enum Request {
+    GetMessages
+}
