@@ -11,3 +11,4 @@ path = "./lib/mod.rs"
 tokio = { version = "*",  features = ["full"]}
 thiserror = { version = "*"}
 clap = { version = "4.5.46", features = ["derive"] }
+reqwest = { version = "0.10", features = ["json"]}
